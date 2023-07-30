@@ -42,7 +42,7 @@ let cart = [];
 function addToCart(id){
   // check if product already exists in cart
   if(cart.some((item) => item.id === id)){
-    alert('Product already in cart')
+    changeNumberOfUnits("plus", id);
   }
   else{
     const item = products.find((product) => product.id === id);
@@ -79,11 +79,35 @@ function renderCartItems() {
         <small>$</small>${item.price}
       </div>
       <div class="units">
-        <div class="btn minus">-</div>
+        <div class="btn minus" onclick="changeNumberOfUnits('minus', ${item.id})">-</div>
         <div class="number">${item.numberOfUnits}</div>
-        <div class="btn plus">+</div>           
+        <div class="btn plus" onclick="changeNumberOfUnits('plus', ${item.id})">+</div>           
         </div>
     </div>
     `
   });
+}
+
+// Change Number of units
+function changeNumberOfUnits(action, id){
+  cart = cart.map( (item) => {
+
+    let numberOfUnits = item.numberOfUnits;
+
+    if (item.id === id){
+      if(action === "minus" && numberOfUnits > 1){
+        numberOfUnits--
+      }
+      if(action === "plus" && numberOfUnits < item.instock) {
+        numberOfUnits++
+      } 
+    }
+
+    return {
+      ...item,
+      numberOfUnits,
+    };
+  })
+
+  updateCart()
 }
