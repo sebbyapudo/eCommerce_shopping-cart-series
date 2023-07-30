@@ -2,6 +2,7 @@
 // select elements 
 
 const productsEl = document.querySelector('.products');
+const cartItemsEl = document.querySelector('.cart-items');
 
 // render products
 function renderProducts(){
@@ -45,10 +46,12 @@ function addToCart(id){
   }
   else{
     const item = products.find((product) => product.id === id);
+
     cart.push({
       ...item, 
       numberOfUnits: 1,
     })
+
   }
   
 
@@ -58,6 +61,29 @@ function addToCart(id){
 // update cart 
 function updateCart(){
   renderCartItems();
-  renderSubTotal();
+  // renderSubTotal();
 }
 
+// Render cart Items 
+function renderCartItems() {
+  cartItemsEl.innerHTML = ''; // Clear cart items 
+  cart.forEach((item) => {
+    cartItemsEl.innerHTML += `
+    <!-- render cart items here -->  
+    <div class="cart-item">
+      <div class="item-info">
+        <img src=${item.imgSrc} alt=${item.name}>
+        <h4>${item.name}</h4>
+      </div>
+      <div class="unit-price">
+        <small>$</small>${item.price}
+      </div>
+      <div class="units">
+        <div class="btn minus">-</div>
+        <div class="number">${item.numberOfUnits}</div>
+        <div class="btn plus">+</div>           
+        </div>
+    </div>
+    `
+  });
+}
