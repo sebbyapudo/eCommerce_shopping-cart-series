@@ -86,7 +86,7 @@ function renderCartItems() {
     cartItemsEl.innerHTML += `
     <!-- render cart items here -->  
     <div class="cart-item">
-      <div class="item-info">
+      <div class="item-info"  onclick="removeItemFromCart(${item.id})">
         <img src=${item.imgSrc} alt=${item.name}>
         <h4>${item.name}</h4>
       </div>
@@ -102,6 +102,14 @@ function renderCartItems() {
     `
   });
 }
+
+// remove items in cart 
+function removeItemFromCart(id){
+  cart = cart.filter( (item) => item.id !== id);
+
+  updateCart();
+}
+
 
 // Change Number of units
 function changeNumberOfUnits(action, id){
