@@ -38,7 +38,8 @@ function renderProducts(){
 renderProducts()
 
 // cart array
-let cart = [];
+let cart = JSON.parse(localStorage.getItem("CART")) || [];
+updateCart();
 
 // ADD TO CART
 function addToCart(id){
@@ -64,6 +65,9 @@ function addToCart(id){
 function updateCart(){
   renderCartItems();
   renderSubTotal();
+
+  // save cart to local storage
+  localStorage.setItem("CART", JSON.stringify(cart));
 }
 
 // calculate and render subtotal
